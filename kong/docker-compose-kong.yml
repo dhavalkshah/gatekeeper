@@ -1,0 +1,21 @@
+name: 'gatekeeper'
+
+networks:
+  kong-net:
+
+services:
+  kong: 
+    image: kong-gateway_oidc:3.7-0.0.1
+    env_file:
+      - ./kong_env.list
+    networks:
+      - kong-net
+    ports:
+      - "8000:8000"
+      - "8443:8443"
+      - "8001:8001"
+      - "8444:8444"
+      - "8002:8002"
+      - "8445:8445"
+      - "8003:8003"
+      - "8004:8004"

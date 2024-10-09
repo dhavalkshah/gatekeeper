@@ -1,0 +1,1 @@
+docker build -t kong-gateway_oidc:3.7-0.0.1 .
