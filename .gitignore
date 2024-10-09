@@ -1,0 +1,5 @@
+postgres/postgres-data/
+postgres/virtu-data/
+kong/kong-data/
+auth/node_modules/
+auth/package-lock.json
