@@ -1,0 +1,15 @@
+name: 'gatekeeper'
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0.4
+    ports:
+        - "8180:8180"
+    networks:
+      - kong-net
+    env_file:
+        - ./keycloak_env.list
+    command: ["start-dev"]
+
+networks:
+  kong-net:
