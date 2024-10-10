@@ -1,0 +1,14 @@
+name: 'gatekeeper'
+
+networks:
+  kong-net:
+
+services:
+  auth: 
+    image: auth:1.0.0
+    # env_file:
+    #   - ./kong_env.list
+    networks:
+      - kong-net
+    ports:
+      - "3000:3000"

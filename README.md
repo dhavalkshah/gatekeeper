@@ -23,4 +23,4 @@ Details of Kong are available [here](./kong/Kong.md).
 - [Bootstrap](./kong/Kong.md#bootstrap) Kong
 - Create Kong routes for KeyCloak, Auth Application and general application. [link](./kong/Kong.md#kong-routing)
 - Configure Keycloak with realms, client, custom attribute, realm-roles and users. [link](./keycloak/KeyCloak.md#configuring-keycloak)
-
+- Try login using the Auth Login API. [link](./auth/Auth.md#login-route-authloginkeycloakclientid)

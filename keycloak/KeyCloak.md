@@ -69,3 +69,4 @@ curl --location 'http://keycloak:8180/kc/realms/Virtu/protocol/openid-connect/to
 --data-urlencode 'scope=openid'
 ```
 
+The above curl will respond with a access_token. Analyse the access_token using https://jwt.io/ and you should be able to see your custom variable as part of the token.
