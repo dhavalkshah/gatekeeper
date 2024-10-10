@@ -108,3 +108,54 @@ In the response json that you receive you must be able to see mention of both ou
         ]
 ```
 Both the plugins will be enabled as well.
+
+### Kong Routing
+
+![alt Kong Routing](../img/kong-routing.jpg)
+
+We will be using Kong-Managere (running on port 8002 in the current setup), to setup the routings.
+### Steps
+- Create 3 services viz. app, auth & keycloak. Parameters as
+    - KeyCloak Service ![alt KeyCloak Route](../img/keycloak-service.png)
+    - Auth Service ![alt Auth Route](../img/auth-service.png)
+    - App Service ![alt App Route](../img/app-service.png)
+- For each of the services created in the above steps add routes
+    - Keycloak Route --> NOTE: strip_path is set as false, as KeyCloak is also running with context-path
+    ```
+    curl --location 'http://localhost:8001/default/services/keycloak/routes' \
+    --header 'Content-Type: application/json' \
+    --data '{
+        "name": "admin-route",
+        "protocols": [ "http","https"],
+        "paths": ["/kc"],
+        "strip_path": false,
+        "path_handling": "v1"
+    }'
+    ```
+
+    - Auth Route --> 
+
+    ```
+    curl --location 'http://localhost:8001/default/services/auth/routes' \
+    --header 'Content-Type: application/json' \
+    --data '{
+        "name": "auth-routes",
+        "protocols": [ "http","https"],
+        "paths": ["/auth"],
+        "strip_path": false,
+        "path_handling": "v1"
+    }'
+    ```
+    - App Route -->
+    ```
+    curl --location 'http://localhost:8001/default/services/app/routes' \
+    --header 'Content-Type: application/json' \
+    --data '{
+        "name": "app-routes",
+        "protocols": [ "http","https"],
+        "paths": ["/app"],
+        "strip_path": false,
+        "path_handling": "v1"
+    }'
+    ```
+Assuming 8000 is the port which Kong is listening on; try url `http:\\localhost:8000\kc`, it should reroute you to KeyCloak page. If it happens your routing logic is working fine. :) 

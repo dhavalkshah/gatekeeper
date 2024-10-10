@@ -21,3 +21,6 @@ Details of Kong are available [here](./kong/Kong.md).
 - Start Keycloak. Starting it for the 1st time, we will have to give it sometime to bootstrap. It will internally run the migrations and create the required tables.
 - [Build](./kong/Kong.md#build) customized Kong image.
 - [Bootstrap](./kong/Kong.md#bootstrap) Kong
+- Create Kong routes for KeyCloak, Auth Application and general application. [link](./kong/Kong.md#kong-routing)
+- Configure Keycloak with realms, client, custom attribute, realm-roles and users. [link](./keycloak/KeyCloak.md#configuring-keycloak)
+
