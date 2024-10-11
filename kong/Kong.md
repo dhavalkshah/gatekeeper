@@ -159,3 +159,45 @@ We will be using Kong-Managere (running on port 8002 in the current setup), to s
     }'
     ```
 Assuming 8000 is the port which Kong is listening on; try url `http:\\localhost:8000\kc`, it should reroute you to KeyCloak page. If it happens your routing logic is working fine. :) 
+
+
+# Securing APIs
+
+Securing APIs has 2 parts 
+- Authentication - this is done using Cust OIDC plugin
+- Authorization - this is done using Cust JWT plugin
+
+## Authorization
+We will enable OIDC plugin on the route (e.g. /app-routes) of the application.
+With this any API call to /app-routes/* (e.g. /app-routes/getCustomerData) will be interjected by this plugin.
+We are also planning that Authentication will be done by our auth app and we will not rely on user being re-directed to the another login screen.
+For this we will have set:
+- introspection_endpoint --> If this is set, every time a token is presented, plugin will check for its validity with KeyCloak. 
+- bearer_only --> In case the token is invalid; if this flag is set to no, user will be routed to Authorization. If the flag is set to yes the request will be denied as it is "Unauthorized".  
+To enable OIDC plugin on a route use the following Kong Admin API:
+```
+curl --location 'http://localhost:8001/routes/app-routes/plugins' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'name=cust-oidc' \
+--data-urlencode 'config.bearer_only=yes' \
+--data-urlencode 'config.client_id=virtuservice' \
+--data-urlencode 'config.client_secret=c9ozNmm92iv9Qfc8BpEZAe2ra1J46Bbb' \
+--data-urlencode 'config.realm=Virtu' \
+--data-urlencode 'config.introspection_endpoint=http://keycloak:8180/kc/realms/Virtu/protocol/openid-connect/token/introspect' \
+--data-urlencode 'config.redirect_uri=http://localhost:3000/auth/callback'
+```
+
+To enable JWT plugin on a route use the following Kong Admin API:
+```
+curl -X POST http://localhost:8001/routes/app-routes/plugins \
+    --data "name=cust-jwt" \
+    --data "config.allowed_iss=http://keycloak:8180/kc/realms/Virtu"
+    --data "config.client_roles="manager"
+```
+
+NOTE: For providing multiple roles use comma-separated string. e.g. if you want to allow manager and admin the config parameter will look like 
+```
+    --data "config.client_roles="manager,admin"
+```
+
+Post this try accessing the APIs on app-routes with the user who is not having **manager** role, the user should be denied suggesting Unauthorized access.

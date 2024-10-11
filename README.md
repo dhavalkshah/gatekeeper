@@ -24,3 +24,5 @@ Details of Kong are available [here](./kong/Kong.md).
 - Create Kong routes for KeyCloak, Auth Application and general application. [link](./kong/Kong.md#kong-routing)
 - Configure Keycloak with realms, client, custom attribute, realm-roles and users. [link](./keycloak/KeyCloak.md#configuring-keycloak)
 - Try login using the Auth Login API. [link](./auth/Auth.md#login-route-authloginkeycloakclientid)
+- Build, deploy and test the Dummy App which exposes an API [link](./app/App.md) & test the dummy API with token [link](./app/App.md#before-securing-the-api)
+- Secure the API using Kong OIDC plugin and JWT plugin. [link](./kong/Kong.md#securing-apis)
