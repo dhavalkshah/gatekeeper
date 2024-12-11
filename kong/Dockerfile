@@ -1,4 +1,4 @@
-FROM kong/kong-gateway:3.1
+FROM kong/kong-gateway:3.8.0.0-ubuntu
 LABEL description="Kong  + kong-oidc plugin"
 USER root
 RUN apt-get update
@@ -7,8 +7,8 @@ RUN apt-get -y install zip
 
 COPY ./cust-oidc/kong/plugins/cust-oidc /usr/local/share/lua/5.1/kong/plugins/cust-oidc
 COPY ./cust-jwt/kong/plugins/cust-jwt /usr/local/share/lua/5.1/kong/plugins/cust-jwt
-RUN luarocks install lua-resty-session 3.10
-RUN luarocks install lua-resty-openidc 1.7.6
+RUN luarocks install lua-resty-session 4.0.5
+RUN luarocks install lua-resty-openidc 1.8.0
 
 ENV KONG_PLUGINS=bundled,cust-oidc,cust-jwt
 
